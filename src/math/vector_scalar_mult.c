@@ -1,22 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   vector_operations.h                                :+:      :+:    :+:   */
+/*   vector_scalar_mult.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ganselmo <ganselmo@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/05/23 20:39:19 by ganselmo          #+#    #+#             */
-/*   Updated: 2026/05/23 21:52:00 by ganselmo         ###   ########.fr       */
+/*   Created: 2026/05/23 21:33:53 by ganselmo          #+#    #+#             */
+/*   Updated: 2026/05/23 21:49:40 by ganselmo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef VECTOR_OPERATIONS_H
-# define VECTOR_OPERATIONS_H
+#include "math/vector.h"
 
-# include "math/vector.h"
+t_vector	*scalar_multiplication(t_vector *vector, long double scalar)
+{
+	t_vector	*result_vector;
+	size_t		index;
 
-t_vector	*add_vectors(t_vector_array *array);
-
-t_vector	*scalar_multiplication(t_vector *vector, long double scalar);
-
-#endif
+	result_vector = create_blank_vector(vector->size);
+	index = 0;
+	while (index < result_vector->size)
+	{
+		result_vector->data[index] = vector->data[index] * scalar;
+		index++;
+	}
+	return (result_vector);
+}
