@@ -1,53 +1,44 @@
-#include "math/vector.h"
-#include "math/vector_operations.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ganselmo <ganselmo@student.42.rio>         +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/05/24 01:16:56 by ganselmo          #+#    #+#             */
+/*   Updated: 2026/05/24 01:17:17 by ganselmo         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
-static void	print_vector(t_vector *vector)
-{
-	size_t	index;
+#include <stdio.h>
 
-	index = 0;
-
-	printf("[ ");
-
-	while (index < vector->size)
-	{
-		printf("%Lf ", vector->data[index]);
-		index++;
-	}
-
-	printf("]\n");
-}
+#include "io/vector_parser.h"
 
 int	main(void)
 {
-	t_vector	*vector;
-	t_vector	*result;
+	FILE	*file;
+	size_t	size;
+	size_t	lines;
 
-	vector = create_blank_vector(3);
+	file = fopen("vectors.txt", "r");
 
-	if (vector == NULL)
+	if (file == NULL)
+	{
+		printf("Error opening file\n");
 		return (1);
+	}
 
-	vector->data[0] = 1;
-	vector->data[1] = 2;
-	vector->data[2] = 3;
+	size = file_size(file);
 
-	printf("Original vector:\n");
-	print_vector(vector);
+	printf("File size: %zu characters\n", size);
 
-	result = scalar_multiplication(vector, 2);
+	rewind(file);
 
-	if (result == NULL)
-		return (1);
+	lines = count_file_vectors(file);
 
-	printf("Scalar multiplication by 2:\n");
-	print_vector(result);
+	printf("File lines: %zu\n", lines);
 
-	free(vector->data);
-	free(vector);
-
-	free(result->data);
-	free(result);
+	fclose(file);
 
 	return (0);
 }

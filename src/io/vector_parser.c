@@ -6,29 +6,41 @@
 /*   By: ganselmo <ganselmo@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/23 15:50:17 by ganselmo          #+#    #+#             */
-/*   Updated: 2026/05/23 19:44:16 by ganselmo         ###   ########.fr       */
+/*   Updated: 2026/05/24 01:31:36 by ganselmo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "include/io/vector_parser.h"
+#include "io/vector_parser.h"
 
-/*
-	O que a função deve fazer:
-		1. Pegar quantos vetores forem os que 
-*/
-t_vector	*parse_vector(FILE *file);
+size_t	file_size(FILE *fd)
 {
-	FILE	*file;
+	size_t	size;
 
-	file = fopen("../../vectors.txt", "r");
-	if (file == NULL)
-		return (1);
-	fclose(file);
-	return (vector);
+	if (fd == NULL)
+		return (0);
+	size = 0;
+	while (fgetc(fd) != EOF)
+		size++;
+	rewind(fd);
+	return (size);
 }
 
-t_vector_array	*parse_vector_array(FILE *file)
+size_t	count_file_vectors(FILE *fd)
 {
+	size_t	count;
+	int		letter;
 
-	
+	if (fd == NULL)
+		return (0);
+	count = 0;
+	letter = fgetc(fd);
+	while (letter != EOF)
+	{
+		if (letter == '\n')
+			count++;
+		letter = fgetc(fd);
+	}
+	rewind(fd);
+	count /= 2;
+	return (count);
 }
